@@ -30,7 +30,7 @@ class ControllerFile extends ControllerAbstract
     protected function _initialize(Library\ObjectConfig $config)
 	{
 		$config->append(array(
-			'behaviors' => array('com:files.controller.behavior.thumbnailable')
+			'behaviors' => array('com:files.controller.behavior.thumbnailable','searchable')
 		));
 
 		parent::_initialize($config);

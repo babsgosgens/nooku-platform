@@ -26,7 +26,8 @@ class ArticlesControllerArticle extends Library\ControllerModel
     	        'com:revisions.controller.behavior.revisable',
     		    'com:languages.controller.behavior.translatable',
                 'com:attachments.controller.behavior.attachable',
-                'com:tags.controller.behavior.taggable'
+                'com:tags.controller.behavior.taggable',
+                'com:searches.controller.behavior.searchable'
     	    )
     	));
     
