@@ -8,9 +8,9 @@
  */
 ?>
 
-<style src="media://debug/highlighter/prettify.css" />
-<script src="media://debug/highlighter/prettify.js" />
-<script src="media://debug/highlighter/lang-sql.js" />
+<style src="assets://debug/highlighter/prettify.css" />
+<script src="assets://debug/highlighter/prettify.js" />
+<script src="assets://debug/highlighter/lang-sql.js" />
 <script>
 window.addEvent('domready', prettyPrint);
 </script>
@@ -18,10 +18,10 @@ window.addEvent('domready', prettyPrint);
 <table class="adminlist">
 	<thead>
     	<tr>
-    		<th class="-koowa-sortable"><?= @text('#') ?></th>
-    		<th class="-koowa-sortable"><?= @text('Type') ?></th>
-    		<th class="-koowa-sortable"><?= @text('Time'); ?></th>
-    		<th><?= @text('Query'); ?></th>
+    		<th class="-koowa-sortable"><?= translate('#') ?></th>
+    		<th class="-koowa-sortable"><?= translate('Type') ?></th>
+    		<th class="-koowa-sortable"><?= translate('Time'); ?></th>
+    		<th><?= translate('Query'); ?></th>
     	</tr>
   	</thead>
   	<tbody>

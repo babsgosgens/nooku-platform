@@ -10,14 +10,16 @@
 
 <? $list = (isset($row) && isset($table)) ? $attachments->find(array('row' => $row, 'table' => $table)) : $attachments ?>
 
-<script src="media://attachments/js/attachments.list.js" />
-<script src="media://files/js/uri.js" />
+<?= helper('behavior.modal') ?>
+
+<script src="assets://attachments/js/attachments.list.js" />
+<script src="assets://files/js/uri.js" />
 
 <script>
 window.addEvent('domready', function() {
     new Attachments.List({
         container: 'attachments-list',
-        action: '<?= @route('view=attachments') ?>',
+        action: '<?= route('view=attachments') ?>',
         token: '<?= $this->getObject('user')->getSession()->getToken() ?>'
     });
 });
@@ -28,7 +30,7 @@ window.addEvent('domready', function() {
     <? foreach($list as $item) : ?>
     	<? if($item->file->isImage()) : ?>
         <div class="thumbnail">
-            <a class="modal" href="<?= @route('view=attachment&format=file&id='.$item->id) ?>" rel="{handler: 'image'}">
+            <a class="modal" href="<?= route('view=attachment&format=file&id='.$item->id) ?>" rel="{handler: 'image'}">
                 <img src="<?= $item->thumbnail->thumbnail ?>" />
             </a>
             <div class="thumbnail__caption">
@@ -50,7 +52,7 @@ window.addEvent('domready', function() {
     <? foreach($list as $item) : ?>        
     	<? if(!$item->file->isImage()) : ?>
     	<li>
-            <a href="<?= @route('view=attachment&format=file&id='.$item->id) ?>"><?= @escape($item->name) ?></a>
+            <a href="<?= route('view=attachment&format=file&id='.$item->id) ?>"><?= escape($item->name) ?></a>
             <div class="caption btn-group">
                 <a class="btn btn-mini btn-danger" href="#" data-action="delete" data-id="<?= $item->id; ?>">
                     <i class="icon-trash icon-white"></i>

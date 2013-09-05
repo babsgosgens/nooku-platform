@@ -11,11 +11,11 @@
 <!DOCTYPE HTML>
 <html lang="<?= $language; ?>" dir="<?= $direction; ?>">
 
-<?= @template('page_head.html') ?>
+<?= import('page_head.html') ?>
 
 <body id="tmpl-modal" class="com_<?= $extension ?>">
-    <?= @template('page_message.html') ?>
-    <ktml:content />
+    <?= import('page_message.html') ?>
+    <ktml:content>
 </body>
 
 </html>

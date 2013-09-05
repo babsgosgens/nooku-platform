@@ -11,10 +11,10 @@
 <textarea style="display: none" id="file_preview">
     <div class="files-preview">
         <div class="preview extension-[%=metadata.extension%]">
-            <img src="media://files/images/document-64.png" width="64" height="64" alt="[%=name%]" border="0" />
+            <img src="assets://files/images/document-64.png" width="64" height="64" alt="[%=name%]" border="0" />
         </div>
         <div class="details">
-            <a href="[%=baseurl+'/'+filepath%]" target="_blank"><?= @text('View'); ?></a>
+            <a href="[%=baseurl+'/'+filepath%]" target="_blank"><?= translate('View'); ?></a>
             <h3 class="name" title="[%=name%]">[%=name%]</h3>
         </div>
         <!--<h4 class="preview-section">general</h4>-->
