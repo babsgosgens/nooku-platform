@@ -15,8 +15,8 @@ use Nooku\Library\ObjectConfig;
 /**
  * Abstract Local Adapter
  *
- * @author   Ercan Ozkaya <http://nooku.assembla.com/profile/ercanozkaya>
- * @package Nooku\Component\Files
+ * @author   Terry Visser <http://nooku.assembla.com/profile/terryvisser>
+ * @package Nooku\Component\Searches
  */
 interface AdapterEngineInterface
 {

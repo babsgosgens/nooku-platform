@@ -112,9 +112,12 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
         }
         $identifier = $context->getSubject()->getIdentifier();
 
-        $doc->id = $identifier->name."_".$id;
-        $doc->identifier = $identifier->package;
-        $doc->identifier_id = $id;
+        $doc->id = $identifier->identifier."?id=".$id;
+        $doc->identifier = $identifier->identifier;
+        $doc->identifier_type = $identifier->type;
+        $doc->identifier_package = $identifier->package;
+        $doc->identifier_name = $identifier->name;
+        $doc->identifier_query = "&id=".$id;
 
 
         if(is_numeric($context->result->get('categories_category_id'))){

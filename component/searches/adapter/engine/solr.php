@@ -12,7 +12,7 @@ namespace Nooku\Component\Searches;
 use Nooku\Library;
 use Nooku\Library\ObjectConfig;
 
-require JPATH_VENDOR.'/autoload.php';
+//require JPATH_VENDOR.'/autoload.php';
 
 use Nooku\Library\ObjectIdentifierInterface;
 use Nooku\Library\ObjectManagerInterface;
@@ -84,7 +84,9 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
             }
             $query->setStart($state->offset);
             $query->setRows($state->limit);
-
+//            echo "<pre>";
+//            print_r($this->_client);
+//            die();
             $results =$this->_client->select($query);
             $rowset['total'] = $results->getNumFound();
 

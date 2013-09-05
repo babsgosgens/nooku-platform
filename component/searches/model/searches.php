@@ -91,7 +91,6 @@ class ModelSearches extends Library\ModelAbstract
      */
     public function getRowset()
     {
-
         $config = $this->getConfig();
 
         // Get the data if it doesn't already exist
