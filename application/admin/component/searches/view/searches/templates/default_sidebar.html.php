@@ -10,4 +10,3 @@
 
 <h3><?= @text('Components')?></h3>
 
-<?= @template('com:searches.view.facets.list.html', array('facets' => @object('com:searches.model.facets')->field('identifier')->getRowset())); ?>
