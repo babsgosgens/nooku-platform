@@ -8,5 +8,5 @@
  */
 ?>
 
-<h3><?= @text('Components')?></h3>
+<h3><?= translate('Components')?></h3>
 

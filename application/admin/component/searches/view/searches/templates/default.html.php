@@ -12,37 +12,37 @@
 <script src="media://js/koowa.js" />
 <style src="media://css/koowa.css" />
 -->
-<?= @helper('behavior.sortable') ?>
+<?= helper('behavior.sortable') ?>
 
-<ktml:module position="toolbar">
-    <?= @helper('toolbar.render', array('toolbar' => $toolbar))?>
+<ktml:module position="actionbar">
+    <ktml:toolbar type="actionbar">
 </ktml:module>
 
 <ktml:module position="sidebar">
-    <?= @template('default_sidebar.html'); ?>
+    <?= import('default_sidebar.html'); ?>
 </ktml:module>
 
 <form action="" method="get" class="-koowa-grid">
-    <?= @template('default_scopebar.html'); ?>
+    <?= import('default_scopebar.html'); ?>
     <table>
         <thead>
         <tr>
             <th width="1">
-                <?= @helper('grid.checkall') ?>
+                <?= helper('grid.checkall') ?>
             </th>
             <th width="1"></th>
             <th>
-                <?= @helper('grid.sort', array('column' => 'title')) ?>
+                <?= helper('grid.sort', array('column' => 'title')) ?>
             </th>
             <th width="1">
-                <?= @helper('grid.sort', array('title' => 'Last modified', 'column' => 'last_activity_on')) ?>
+                <?= helper('grid.sort', array('title' => 'Last modified', 'column' => 'last_activity_on')) ?>
             </th>
         </tr>
         </thead>
         <tfoot>
         <tr>
             <td colspan="7">
-                <?= @helper('com:application.paginator.pagination', array('total' => $total)) ?>
+                <?= helper('com:application.paginator.pagination', array('total' => $total)) ?>
             </td>
         </tr>
         </tfoot>
@@ -53,12 +53,12 @@
                 <td></td>
                 <td></td>
                 <td class="ellipsis">
-                    <a href="<?=@route("option=com_".$search->identifier."&view=".$search->identifier."&id=".$search->identifier_id)?>">
-                        <?= @escape($search->title); ?>
+                    <a href="<?@route("option=com_".$search->identifier."&view=".$search->identifier."&id=".$search->identifier_id)?>">
+                        <?= escape($search->title); ?>
                     </a>
                 </td>
                 <td>
-                    <?= @escape($search->modified_on); ?>
+                    <?= escape($search->modified_on); ?>
                 </td>
             </tr>
         <? endforeach ?>
