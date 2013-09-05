@@ -26,13 +26,23 @@ class ControllerBehaviorSearchable extends Searches\ControllerBehaviorSearchable
         $query = $this->_solarium->createExtract();
         $doc = $query->createDocument();
 
-        $table = 'files';
+
+        $identifier = $context->getSubject()->getIdentifier();
 
         $file = $this->getModel()->getRow();
 
 
-        $doc->id = $file->filename;
-        $doc->identifier = $table;
+        $doc->id = $identifier->identifier."?container=".$file->container."&folder=".$file->folder."&name=".$file->name;
+
+        $doc->identifier = $identifier->identifier;
+        $doc->identifier_type = $identifier->type;
+        $doc->identifier_package = $identifier->package;
+        $doc->identifier_name = $identifier->name;
+        $doc->identifier_query = "&container=".$file->container."&folder=".$file->folder."&name=".$file->name;
+
+        $doc->title = $file->filename;
+        $doc->folder_s = $file->folder;
+        $doc->container_s = $file->container;
 
 
         $query = $this->_solarium->createExtract();

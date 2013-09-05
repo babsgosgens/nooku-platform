@@ -178,7 +178,7 @@ window.addEvent('domready', function() {
 
 	uploader.bind('BeforeUpload', function(uploader, file) {
 		// set directory in the request
-		uploader.settings.url = Files.app.createRoute({
+		uploader.settings.url =     Files.app.createRoute({
 			view: 'file',
 			plupload: 1,
 			folder: Files.app.getPath()
