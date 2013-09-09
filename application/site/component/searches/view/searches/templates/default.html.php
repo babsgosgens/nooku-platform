@@ -13,17 +13,21 @@
 <style src="media://css/koowa.css" />
 -->
 
+
 <form action="" method="get" class="-koowa-grid">
-    <?= import('default_scopebar.html'); ?>
+
     <table>
         <thead>
         <tr>
             <th width="1">
-                <?= helper('grid.checkall') ?>
+
             </th>
             <th width="1"></th>
             <th>
                 <?= helper('grid.sort', array('column' => 'title')) ?>
+            </th>
+            <th>
+                <?= helper('grid.sort', array('title'=>'Type','column' => 'identifier_package')) ?>
             </th>
             <th width="1">
                 <?= helper('grid.sort', array('title' => 'Last modified', 'column' => 'last_activity_on')) ?>
@@ -41,12 +45,17 @@
         <? foreach($searches as $search) : ?>
 
             <tr data-readonly="0">
-                <td></td>
+                <td align="center">
+
+                </td>
                 <td></td>
                 <td class="ellipsis">
-                    <a href="<?@route("option=com_".$search->identifier."&view=".$search->identifier."&id=".$search->identifier_id)?>">
+                    <a href="<?= route('&option=com_'.$search->identifier_package.'&view='.$search->identifier_name.$search->identifier_query);?>">
                         <?= escape($search->title); ?>
                     </a>
+                </td>
+                <td>
+                    <?= escape($search->identifier_package);?>
                 </td>
                 <td>
                     <?= escape($search->modified_on); ?>

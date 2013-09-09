@@ -44,7 +44,6 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
 
         $this->_client = new Solarium\Client($solr);
 
-
     }
 
     /**
@@ -70,7 +69,7 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
             $query->setQueryDefaultOperator('AND');
             if($state->search){
 
-                $query->setQuery("*".$state->search."*");
+                $query->setQuery("*".str_ireplace(" ","* *",$state->search)."*");
             }
 
             if(is_string($state->identifier)){
@@ -84,9 +83,7 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
             }
             $query->setStart($state->offset);
             $query->setRows($state->limit);
-//            echo "<pre>";
-//            print_r($this->_client);
-//            die();
+
             $results =$this->_client->select($query);
             $rowset['total'] = $results->getNumFound();
 

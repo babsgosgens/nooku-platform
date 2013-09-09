@@ -24,7 +24,7 @@ class ContactsControllerContact extends Library\ControllerModel
                 'editable',
                 'com:activities.controller.behavior.loggable',
                 'com:attachments.controller.behavior.attachable',
-                'searchable'
+                'com:searches.controller.behavior.searchable'
             ),
         ));
     

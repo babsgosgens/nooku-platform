@@ -96,8 +96,6 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
 
         $id = $context->result->get('id');
 
-
-
         foreach($schema->schema->fields as $key=>$value){
 
             if($context->result->get($key) !== "" && $value->type != 'date'){
@@ -110,6 +108,7 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
             }
 
         }
+
         $identifier = $context->getSubject()->getIdentifier();
 
         $doc->id = $identifier->identifier."?id=".$id;
