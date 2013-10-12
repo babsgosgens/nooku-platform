@@ -50,7 +50,8 @@
                 </td>
                 <td></td>
                 <td class="ellipsis">
-                    <a href="<?= route('&option=com_'.$search->identifier_package.'&view='.$search->identifier_name.$search->identifier_query);?>">
+
+                    <a href="<?= helper('route.result', array('row' => $search)) ?>">
                         <?= escape($search->title); ?>
                     </a>
                 </td>
