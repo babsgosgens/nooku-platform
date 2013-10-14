@@ -129,37 +129,12 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
             }
         }
 
-        /**
-         * Getting all the tags if this is taggable
-         */
-
-        $tags = array();
-        if(is_array($context->result->get('tags'))){
-            foreach($context->result->get('tags') as $tag){
-                $tags[] = $this->getObject('com:tags.model.tags')->id($tag)->table($identifier->name)->getRow()->get('title');
-            }
-            $doc->tags = $tags;
-        }
-
         if($context->result->get('created_by')){
             $doc->author = $this->getObject('com:users.model.users')->id($context->result->get('created_by'))->getRow()->get('name');
         }
 
 
-        if($this->isAttachable()){
-            // Need to think how i should do this..
-            $tmp = array();
-            $attatchments = $this->getObject('com:attachments.model.attachments')->row($id)->table($identifier->name)->getRowset();
-            foreach($attatchments as $attatchment){
-                if(!$attatchment->file->isImage()){
-                    //base64_encode
-                    $tmp[] = file_get_contents($attatchment->file->fullpath);
-                }
-                $doc->attachments = $tmp;
-            }        }
-
-
-        $update->addDocuments(array($doc));
+       $update->addDocuments(array($doc));
 
         $update->addCommit();
         $this->_solarium->update($update);
