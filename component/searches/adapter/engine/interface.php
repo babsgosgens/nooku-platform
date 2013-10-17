@@ -25,6 +25,5 @@ interface AdapterEngineInterface
     public function getRow(Library\ModelState $state);
     public function save(Library\CommandContext $context);
     public function delete(Library\CommandContext $context);
-    public function toArray();
 
 }

@@ -11,12 +11,8 @@ namespace Nooku\Component\Searches;
 
 use Nooku\Library;
 use Nooku\Library\ObjectConfig;
-
-//require JPATH_VENDOR.'/autoload.php';
-
-use Nooku\Library\ObjectIdentifierInterface;
-use Nooku\Library\ObjectManagerInterface;
 use Solarium;
+
 /**
  * Abstract Local Adapter
  *
@@ -27,11 +23,14 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
 {
     protected  $_client;
 
+    /**
+     * @param ObjectConfig $config
+     */
     public function __construct(ObjectConfig $config)
     {
         parent::__construct($config);
         //Setup the component locator
-        $solr = array(
+        $this->_client = new Solarium\Client(array(
             'endpoint' => array(
                 'localhost' => array(
                     'host' => $config->get('searchengine')->url,
@@ -40,10 +39,7 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
                     'core' => $config->get('searchengine')->core,
                 )
             )
-        );
-
-        $this->_client = new Solarium\Client($solr);
-
+        ));
     }
 
     /**
@@ -59,6 +55,13 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
         }
         return (bool) false;
     }
+
+    /**
+     * Retrives results from solr and returns them as an array;
+     *
+     * @param Library\ModelState $state
+     * @return array
+     */
     public function getRowset(Library\ModelState $state)
     {
 
@@ -96,6 +99,13 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
         return $rowset;
 
     }
+
+    /**
+     * Returns 1 result from solr and returns this as an array
+     *
+     * @param Library\ModelState $state
+     * @return array
+     */
     public function getRow(Library\ModelState $state){
         $row = array();
         if($this->isConnected()){
@@ -119,12 +129,24 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
 
         return $row;
     }
-    public function save(Library\CommandContext $context){
 
+    /**
+     * Save's a result to solr
+     *
+     * @param Library\CommandContext $context
+     * @return bool
+     */
+    public function save(Library\CommandContext $context){
+        // Need to implement this later..
+
+        return (bool) true;
     }
 
     /**
+     * Delete an record from solr.
      *
+     * @param Library\CommandContext $context
+     * @return bool
      */
     public function delete(Library\CommandContext $context)
     {
@@ -136,8 +158,8 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
         $update->addCommit();
 
         $this->_solarium->update($update);
-    }
-    public function toArray(){
 
+        return (bool) true;
     }
+
 }
