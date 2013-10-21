@@ -40,7 +40,7 @@ class ControllerBehaviorSearchable extends Searches\ControllerBehaviorSearchable
         $doc->identifier_name = $identifier->name;
         $doc->identifier_query = "&container=".$file->container."&folder=".$file->folder."&name=".$file->name;
 
-        $doc->title = $file->filename;
+        $doc->title = (string) $file->filename;
         $doc->folder_s = $file->folder;
         $doc->container_s = $file->container;
 
