@@ -22,7 +22,7 @@ use Solarium;
  * Searchable Database Behavior
  *
  * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
- * @package Nooku\Component\Revisions
+ * @package Nooku\Component\Searches
  */
 class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
 {
@@ -48,7 +48,6 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
         parent::_initialize($config);
     }
 
-
     /**
      * After table insert
      *
@@ -60,8 +59,8 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
     protected function _afterControllerAdd(Library\CommandContext $context)
     {
         $this->addToSearchEngine($context);
-
     }
+
     /**
      * After table update
      *
@@ -75,8 +74,8 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
         $this->addToSearchEngine($context);
     }
 
-    protected function _afterControllerDelete(Library\CommandContext $context){
-
+    protected function _afterControllerDelete(Library\CommandContext $context)
+    {
         // get an update query instance
         $update = $this->_solarium->createUpdate();
 
@@ -87,60 +86,62 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
         $this->_solarium->update($update);
     }
 
-
-    protected  function addToSearchEngine(Library\CommandContext $context){
-
+    protected  function addToSearchEngine(Library\CommandContext $context)
+    {
         $schema = json_decode(file_get_contents($this->_solarium->getEndpoint()->getBaseUri().'admin/luke?show=schema&wt=json'));
         $update = $this->_solarium->createUpdate();
-        $doc = $update->createDocument();
+        $doc    = $update->createDocument();
 
         $id = $context->result->get('id');
 
-        foreach($schema->schema->fields as $key=>$value){
-
-            if($context->result->get($key) !== "" && $value->type != 'date'){
+        foreach($schema->schema->fields as $key => $value)
+        {
+            if($context->result->get($key) !== "" && $value->type != 'date')
+            {
                 $doc->{$key} = $context->result->get($key);
-            }elseif($context->result->get($key) !== "" && $value->type == 'date'){
-                $doc->{$key} = date('Y-m-d\TH:i:s\Z',strtotime($context->result->get($key)));
-            }else{
+            }
+            elseif($context->result->get($key) !== "" && $value->type == 'date')
+            {
+                $doc->{$key} = date('Y-m-d\TH:i:s\Z', strtotime($context->result->get($key)));
+            }
+            else
+            {
                 $field = 'attr_'.$key;
                 $doc->{$field} = $context->result->get($key);
             }
-
         }
 
         $identifier = $context->getSubject()->getIdentifier();
 
-        $doc->id = $identifier->identifier."?id=".$id;
-        $doc->identifier = $identifier->identifier;
-        $doc->identifier_type = $identifier->type;
-        $doc->identifier_package = $identifier->package;
-        $doc->identifier_name = $identifier->name;
-        $doc->identifier_query = "&id=".$id;
+        $doc->id                    = $identifier->identifier."?id=".$id;
+        $doc->identifier            = $identifier->identifier;
+        $doc->identifier_type       = $identifier->type;
+        $doc->identifier_package    = $identifier->package;
+        $doc->identifier_name       = $identifier->name;
+        $doc->identifier_query      = "&id=".$id;
 
 
-        if(is_numeric($context->result->get('categories_category_id'))){
+        if(is_numeric($context->result->get('categories_category_id')))
+        {
             $category = $this->getObject('com:categories.model.categories')
                 ->id($context->result->get('categories_category_id'))
                 ->table($identifier->package)
                 ->getRow();
-            if(!empty($category->title)){
+
+            if(!empty($category->title))
+            {
                 $doc->category = $category->title;
             }
         }
 
-        if($context->result->get('created_by')){
+        if($context->result->get('created_by'))
+        {
             $doc->author = $this->getObject('com:users.model.users')->id($context->result->get('created_by'))->getRow()->get('name');
         }
 
-
-       $update->addDocuments(array($doc));
-
+        $update->addDocuments(array($doc));
         $update->addCommit();
+
         $this->_solarium->update($update);
-
-
     }
-
-
 }

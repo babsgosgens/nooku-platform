@@ -15,19 +15,18 @@ use Nooku\Library;
  * Bootstrapper
  *
  * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
- * @package Nooku\Component\Files
+ * @package Nooku\Component\Searches
  */
 class Bootstrapper extends Library\BootstrapperAbstract
 {
     public function bootstrap()
     {
-
         $this->getClassLoader()
             ->getLocator('psr')
             ->registerNamespace('Solarium', JPATH_VENDOR.'/solarium/solarium/library');
+
         $this->getClassLoader()
             ->getLocator('psr')
             ->registerNamespace('Symfony', JPATH_VENDOR.'/symfony/event-dispatcher');
-
     }
 }

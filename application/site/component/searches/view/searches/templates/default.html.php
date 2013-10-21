@@ -13,56 +13,44 @@
 <style src="media://css/koowa.css" />
 -->
 
-
 <form action="" method="get" class="-koowa-grid">
-
     <table>
         <thead>
-        <tr>
-            <th width="1">
-
-            </th>
-            <th width="1"></th>
-            <th>
-                <?= helper('grid.sort', array('column' => 'title')) ?>
-            </th>
-            <th>
-                <?= helper('grid.sort', array('title'=>'Type','column' => 'identifier_package')) ?>
-            </th>
-            <th width="1">
-                <?= helper('grid.sort', array('title' => 'Last modified', 'column' => 'last_activity_on')) ?>
-            </th>
-        </tr>
+            <tr>
+                <th>
+                    <?= helper('grid.sort', array('column' => 'title')) ?>
+                </th>
+                <th>
+                    <?= helper('grid.sort', array('column' => 'identifier_package', 'title' => 'Type')) ?>
+                </th>
+                <th width="1">
+                    <?= helper('grid.sort', array('column' => 'modified_on', 'title' => 'Last modified')) ?>
+                </th>
+            </tr>
         </thead>
         <tfoot>
-        <tr>
-            <td colspan="7">
-                <?= helper('com:application.paginator.pagination', array('total' => $total)) ?>
-            </td>
-        </tr>
+            <tr>
+                <td colspan="7">
+                    <?= helper('com:application.paginator.pagination', array('total' => $total)) ?>
+                </td>
+            </tr>
         </tfoot>
         <tbody>
-        <? foreach($searches as $search) : ?>
-
+            <? foreach($searches as $search) : ?>
             <tr data-readonly="0">
-                <td align="center">
-
-                </td>
-                <td></td>
                 <td class="ellipsis">
-
                     <a href="<?= helper('route.result', array('row' => $search)) ?>">
                         <?= escape($search->title); ?>
                     </a>
                 </td>
                 <td>
-                    <?= escape($search->identifier_package);?>
+                    <?= escape($search->identifier_package); ?>
                 </td>
                 <td>
-                    <?= escape($search->modified_on); ?>
+                    <?= helper('date.humanize', array('date' => $search->modified_on)) ?>
                 </td>
             </tr>
-        <? endforeach ?>
+            <? endforeach ?>
         </tbody>
     </table>
 </form>

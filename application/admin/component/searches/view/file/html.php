@@ -13,8 +13,8 @@ use Nooku\Library\HttpUrl;
 /**
  * File Html View
  *
- * @author  Arunas Mazeika <http://nooku.assembla.com/profile/arunasmazeika>
- * @package Component\Files
+ * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
+ * @package Component\Searches
  */
 class SearchesViewFileHtml extends Library\ViewFile
 {
@@ -39,7 +39,4 @@ class SearchesViewFileHtml extends Library\ViewFile
 
         return parent::render();
     }
-
-
-
 }

@@ -16,8 +16,8 @@ use Solarium;
 /**
  * Abstract Local Adapter
  *
- * @author   Ercan Ozkaya <http://nooku.assembla.com/profile/ercanozkaya>
- * @package Nooku\Component\Files
+ * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
+ * @package Nooku\Component\Searches
  */
 class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
 {
@@ -29,6 +29,7 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
     public function __construct(ObjectConfig $config)
     {
         parent::__construct($config);
+
         //Setup the component locator
         $this->_client = new Solarium\Client(array(
             'endpoint' => array(
@@ -46,13 +47,15 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
      * Check if there is a connection with the solr server.
      * @return bool
      */
-    public function isConnected(){
-
+    public function isConnected()
+    {
         $result = $this->_client->ping($this->_client->createPing());
 
-        if($result->getResponse()->getStatusCode() == 200){
+        if($result->getResponse()->getStatusCode() == 200)
+        {
             return (bool) true;
         }
+
         return (bool) false;
     }
 
@@ -64,40 +67,42 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
      */
     public function getRowset(Library\ModelState $state)
     {
-
         $rowset = array();
-        if($this->isConnected()){
 
+        if($this->isConnected())
+        {
             $query = $this->_client->createSelect();
             $query->setQueryDefaultOperator('AND');
-            if($state->search){
 
-                $query->setQuery("*".str_ireplace(" ","* *",$state->search)."*");
+            if($state->search)
+            {
+                $query->setQuery("*".str_ireplace(" ", "* *", $state->search)."*");
             }
 
-            if(is_string($state->identifier)){
-
+            if(is_string($state->identifier))
+            {
                 $query->createFilterQuery('identifier')
-                    ->setQuery('identifier:'.$state->identifier);
+                      ->setQuery('identifier:'.$state->identifier);
             }
 
-            if($state->sort){
-                $query->addSort($state->sort,$state->direction);
+            if($state->sort)
+            {
+                $query->addSort($state->sort, $state->direction);
             }
+
             $query->setStart($state->offset);
             $query->setRows($state->limit);
 
-            $results =$this->_client->select($query);
+            $results = $this->_client->select($query);
             $rowset['total'] = $results->getNumFound();
 
-            foreach($results->getDocuments() as $doc){
+            foreach($results->getDocuments() as $doc)
+            {
                 $rowset['items'][] = $doc->getFields();
             }
-
         }
 
         return $rowset;
-
     }
 
     /**
@@ -106,25 +111,27 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
      * @param Library\ModelState $state
      * @return array
      */
-    public function getRow(Library\ModelState $state){
+    public function getRow(Library\ModelState $state)
+    {
         $row = array();
-        if($this->isConnected()){
 
+        if($this->isConnected())
+        {
             $query = $this->_client->createSelect();
             $query->setQueryDefaultOperator('AND');
 
-            if(is_numeric($state->id)){
-
+            if(is_numeric($state->id))
+            {
                 $query->createFilterQuery('id')
-                    ->setQuery('id:'.$state->id);
+                      ->setQuery('id:'.$state->id);
             }
-            $results =$this->_client->select($query);
 
+            $results = $this->_client->select($query);
 
-            foreach($results->getDocuments() as $doc){
+            foreach($results->getDocuments() as $doc)
+            {
                 $row = $doc->getFields();
             }
-
         }
 
         return $row;
@@ -136,9 +143,9 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
      * @param Library\CommandContext $context
      * @return bool
      */
-    public function save(Library\CommandContext $context){
-        // Need to implement this later..
-
+    public function save(Library\CommandContext $context)
+    {
+        // TODO: Need to implement this later..
         return (bool) true;
     }
 
@@ -161,5 +168,4 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
 
         return (bool) true;
     }
-
 }

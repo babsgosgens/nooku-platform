@@ -12,8 +12,8 @@ use Nooku\Library;
 /**
  * Router
  *
- * @author   Ercan Ozkaya <http://nooku.assembla.com/profile/ercanozkaya>
- * @package Component\Files
+ * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
+ * @package Component\Searches
  */
 class SearchesRouter extends Library\DispatcherRouter
 {

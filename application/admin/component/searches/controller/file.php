@@ -12,8 +12,8 @@ use Nooku\Library;
 /**
  * Dashboard Controller
  *
- * @author  Johan Janssens <http://nooku.assembla.com/profile/johanjanssens>
- * @package Component\Dashboard
+ * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
+ * @package Component\Searches
  */
 class SearchesControllerFile extends Library\ControllerView
 {

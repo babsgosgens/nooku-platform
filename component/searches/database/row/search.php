@@ -12,7 +12,7 @@ namespace Nooku\Component\Searches;
 use Nooku\Library;
 
 /**
- * Search Database Row
+ * Searches Database Row
  *
  * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
  * @package Nooku\Component\Searches
@@ -22,7 +22,7 @@ class DatabaseRowSearch extends Library\DatabaseRowAbstract
     protected function _initialize(Library\ObjectConfig $config)
     {
         $config->append(array(
-            'identity_column'   => 'id'
+            'identity_column' => 'id'
         ));
 
         parent::_initialize($config);

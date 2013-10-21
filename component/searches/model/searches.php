@@ -29,14 +29,13 @@ class ModelSearches extends Library\ModelAbstract
         parent::__construct($config);
 
         $this->getState()
-            ->insert('limit'    , 'int')
-            ->insert('offset'   , 'int')
-            ->insert('sort'     , 'cmd')
-            ->insert('direction', 'word', 'asc')
-            ->insert('search'   , 'string')
-            ->insert('identifier', 'string')
-            ->insert('id','int',null,true);
-
+            ->insert('limit'        , 'int')
+            ->insert('offset'       , 'int')
+            ->insert('sort'         , 'cmd')
+            ->insert('direction'    , 'word', 'asc')
+            ->insert('search'       , 'string')
+            ->insert('identifier'   , 'string')
+            ->insert('id'           , 'int', null, true);
     }
 
     /**
@@ -48,16 +47,16 @@ class ModelSearches extends Library\ModelAbstract
          * Getting the Search Engine params
          */
         $parameters = $this->getObject('application.extensions')->searches->params;
+
         $config->append(array(
-            'searchengine' =>
-            array(
-                'adapter' => $parameters->get('adapter','solr'),
-                'url'   => $parameters->get('url'),
-                'port'  => $parameters->get('port'),
+            'searchengine' => array(
+                'adapter'   => $parameters->get('adapter'),
+                'url'       => $parameters->get('url'),
+                'port'      => $parameters->get('port'),
                 'instance'  => $parameters->get('instance'),
-                'core'  => $parameters->get('core'),
-                'username'  => $parameters->get('username',''),
-                'password'  => $parameters->get('password','')
+                'core'      => $parameters->get('core'),
+                'username'  => $parameters->get('username'),
+                'password'  => $parameters->get('password')
             )
         ));
 
@@ -72,8 +71,8 @@ class ModelSearches extends Library\ModelAbstract
      */
     public function getRow()
     {
-
         $config = $this->getConfig();
+
         if(!isset($this->_row))
         {
             $query = null;
@@ -81,12 +80,11 @@ class ModelSearches extends Library\ModelAbstract
 
             if($state->isUnique())
             {
-                $result = $this->getObject('com:searches.adapter.engine.'.$config->get('searchengine')->adapter,$config->toArray())->getRow($state);
-                $row = $this->getObject('com:searches.database.row.search',array('data' => $result));
-
+                $result = $this->getObject('com:searches.adapter.engine.'.$config->get('searchengine')->adapter, $config->toArray())->getRow($state);
+                $row = $this->getObject('com:searches.database.row.search', array('data' => $result));
             }
-            $this->_row = $row;
 
+            $this->_row = $row;
         }
 
         return $this->_row;
@@ -108,18 +106,20 @@ class ModelSearches extends Library\ModelAbstract
             $query = null;
             $state = $this->getState();
 
-
             if(!$state->isEmpty())
             {
-                $results = $this->getObject('com:searches.adapter.engine.'.$config->get('searchengine')->adapter,$config->toArray())->getRowset($state);
+                $results = $this->getObject('com:searches.adapter.engine.'.$config->get('searchengine')->adapter, $config->toArray())->getRowset($state);
 
                 $this->_total = $results['total'];
-                if($this->_total > 0){
-                    $this->_rowset = $this->getObject('com:searches.database.rowset.searches', array('data'=>$results['items'],'state' => $state));
-                }else{
+
+                if($this->_total > 0)
+                {
+                    $this->_rowset = $this->getObject('com:searches.database.rowset.searches', array('data' => $results['items'], 'state' => $state));
+                }
+                else
+                {
                     $this->_rowset = $this->getObject('com:searches.database.rowset.searches', array('state' => $state));
                 }
-
             }
             else $this->_rowset = $this->getObject('com:searches.database.rowset.searches' , array('state' => $state));
         }
