@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-
 <schema name="example" version="1.5">
-
 
  <fields>
         
@@ -11,9 +9,7 @@
    <field name="identifier_type" type="string" indexed="true" stored="true" omitNorms="true"/>
    <field name="identifier_package" type="string" indexed="true" stored="true" omitNorms="true"/>
    <field name="identifier_name" type="string" indexed="true" stored="true" omitNorms="true"/>
-   <field name="identifier_query" type="string" indexed="true" stored="true"/> 
-   <field name="comments" type="text_general" indexed="false" stored="true" multiValued="true"/>
-   <field name="tags" type="text_general" indexed="false" stored="true" multiValued="true"/>
+   <field name="identifier_query" type="string" indexed="true" stored="true"/>
    <field name="includes" type="text_general" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true" />
 
    <field name="popularity" type="int" indexed="true" stored="true" />
@@ -28,7 +24,6 @@
    <field name="url" type="text_general" indexed="true" stored="true"/>
    <field name="modified_on" type="date" indexed="true" stored="true"/>
    <field name="created_on" type="date" indexed="true" stored="true"/>
-   
 
    <!-- Main body of document extracted by SolrCell.
         NOTE: This field is not indexed by default, since it is also copied to "text"
@@ -37,8 +32,6 @@
    <field name="content" type="text_general" indexed="false" stored="true" multiValued="true"/>
    <field name="introtext" type="text_general" indexed="false" stored="true"/>
    <field name="fulltext" type="text_general" indexed="false" stored="true"/>
-
-   <field name="attachments" type="binary" indexed="false" stored="true" multiValued="true"/>
    
    <!-- catchall field, containing all other searchable text fields (implemented
         via copyField further on in this schema  -->
@@ -118,11 +111,8 @@
    <copyField source="author" dest="text"/>
    <copyField source="fulltext" dest="text"/>
    <copyField source="introtext" dest="text"/>
-   <copyField source="comments" dest="text"/>
-   <copyField source="tags" dest="text"/>
    <copyField source="identifier_name" dest="text"/>
    <copyField source="url" dest="text"/>
-   <copyField source="attachments" dest="text"/>
 
    <!-- Create a string version of author for faceting -->
    <copyField source="author" dest="author_s"/>
