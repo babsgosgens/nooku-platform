@@ -59,7 +59,7 @@
                 <td></td>
                 <td class="ellipsis">
                     <a href="<?= route('option=com_'.$search->identifier_package.'&view='.$search->identifier_name.$search->identifier_query);?>">
-                        <?= ($search->title); ?>
+                        <?= escape($search->title); ?>
                     </a>
                 </td>
                 <td>
