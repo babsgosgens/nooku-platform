@@ -7,6 +7,8 @@
  * @link		git://git.assembla.com/nooku-framework.git for the canonical source repository
  */
 
+namespace Nooku\Component\Searches;
+
 use Nooku\Library;
 
 /**
@@ -15,15 +17,18 @@ use Nooku\Library;
  * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
  * @package Component\Searches
  */
-class SearchesTemplateHelperRoute extends PagesTemplateHelperRoute
+class TemplateHelperRoute extends Library\TemplateHelperDefault
 {
     public function result($config = array())
     {
-        $config   = new Library\ObjectConfig($config);
+        $config = new Library\ObjectConfig($config);
         $result = $config->row;
 
-        $url = "?option=com_".$result->identifier_package."&view=".$result->identifier_name.$result->identifier_query;
-        return $url;
+        switch ($result->identifier) {
+            case 'com:files.controller.file':
+                return "/files/".$this->getObject('application')->getSite()."/files/".$result->folder_s."/".$result->attr_resourcename[0];
+            default:
+                return "?option=com_".$result->identifier_package."&view=".$result->identifier_name.$result->identifier_query;
+        }
     }
-
 }
