@@ -8,49 +8,38 @@
  */
 ?>
 
-<!--
-<script src="media://js/koowa.js" />
-<style src="media://css/koowa.css" />
--->
-
-<form action="" method="get" class="-koowa-grid">
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    <?= helper('grid.sort', array('column' => 'title')) ?>
-                </th>
-                <th>
-                    <?= helper('grid.sort', array('column' => 'identifier_package', 'title' => 'Type')) ?>
-                </th>
-                <th width="1">
-                    <?= helper('grid.sort', array('column' => 'modified_on', 'title' => 'Last modified')) ?>
-                </th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <td colspan="7">
-                    <?= helper('com:application.paginator.pagination', array('total' => $total)) ?>
-                </td>
-            </tr>
-        </tfoot>
-        <tbody>
-            <? foreach($searches as $search) : ?>
-            <tr data-readonly="0">
-                <td class="ellipsis">
-                    <a href="<?= helper('route.result', array('row' => $search)) ?>">
-                        <?= escape($search->title); ?>
-                    </a>
-                </td>
-                <td>
-                    <?= escape($search->identifier_package); ?>
-                </td>
-                <td>
-                    <?= helper('date.humanize', array('date' => $search->modified_on)) ?>
-                </td>
-            </tr>
-            <? endforeach ?>
-        </tbody>
-    </table>
+<form action="" method="get" class="form-search well">
+    <div class="input-append">
+        <input name="search" class="input-xxlarge search-query" type="text"
+               value="<?= escape($state->search) ?>" placeholder="<?= translate('Search ...') ?>"/>
+        <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
+    </div>
 </form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                <?= translate('Title') ?>
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td>
+                <?= helper('paginator.pagination', array('total' => $total, 'show_limit' => false, 'show_count' => false)); ?>
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        <? foreach($searches as $search) : ?>
+        <tr>
+            <td>
+                <a href="<?= helper('route.result', array('row' => $search)) ?>">
+                    <?= escape($search->title); ?>
+                </a>
+            </td>
+        </tr>
+        <? endforeach ?>
+    </tbody>
+</table>
