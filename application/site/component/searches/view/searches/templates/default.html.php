@@ -9,11 +9,14 @@
 ?>
 
 <script src="assets://application/js/jquery.js" />
-<script src="assets://searches/js/jquery-ui-autocomplete.js"/>
-<style src="assets://searches/css/jquery-ui-autocomplete.css"/>
+<script src="assets://searches/js/autocomplete.js"/>
+
+<script src="assets://searches/js/jquery.autocomplete.js"/>
+<style src="assets://searches/css/jquery.autocomplete.css"/>
+
 <form action="" method="get" class="form-search well">
     <div class="input-append">
-        <input name="search" class="input-xxlarge search-query js-search" type="text" id="autocomplete"
+        <input name="search" class="input-xxlarge js-search" type="text" id="autocomplete"
                value="<?= escape($state->search) ?>" placeholder="<?= translate('Search ...') ?>"/>
         <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
     </div>
@@ -46,37 +49,3 @@
         <? endforeach ?>
     </tbody>
 </table>
-<script>
-    $( document ).ready(function() {
-        $('.js-search').autocomplete({
-            source: function( request, response ) {
-                $.ajax({
-                    url: "http://nooku.dev/search.json",
-                    dataType: "jsonp",
-                    data: {
-                        search: request.term
-                    },
-                    success: function( data ) {
-                        response( $.map( data.items, function( item ) {
-                            return {
-                                label: item.data.title,
-                                value: item.data.title
-                            }
-                        }));
-                    }
-                });
-            },
-            minLength: 2,
-            select: function( event, ui ) {
-                $('.js-search').val(ui.item.label);
-                $('.form-search').submit();
-            },
-            open: function() {
-                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-            },
-            close: function() {
-                $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-            }
-        });
-    });
-</script>
