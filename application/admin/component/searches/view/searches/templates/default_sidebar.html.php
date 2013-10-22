@@ -9,4 +9,17 @@
 ?>
 
 <h3><?= translate('Components')?></h3>
-
+<ul class="navigation">
+    <li>
+        <a class="<?= $state->package == null ? 'active' : ''; ?>" href="<?= route('package=' ) ?>">
+            <?= 'All Components' ?>
+        </a>
+    </li>
+    <? foreach($packages as $package) : ?>
+        <li>
+            <a class="<?= $state->package == $package->field ? 'active' : ''; ?>" href="<?= route('package='.$package->field ) ?>">
+                <?= escape($package->field) ?><span class="navigation__badge"><?=$package->count?></span>
+            </a>
+        </li>
+    <? endforeach; ?>
+</ul>

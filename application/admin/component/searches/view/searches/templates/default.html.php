@@ -19,7 +19,7 @@
 </ktml:module>
 
 <ktml:module position="sidebar">
-    <?= import('default_sidebar.html'); ?>
+    <?= import('default_sidebar.html', array('packages' => $packages)); ?>
 </ktml:module>
 
 <form action="" method="get" class="-koowa-grid">
