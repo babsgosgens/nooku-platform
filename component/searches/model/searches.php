@@ -35,6 +35,8 @@ class ModelSearches extends Library\ModelAbstract
             ->insert('direction'    , 'word', 'asc')
             ->insert('search'       , 'string')
             ->insert('identifier'   , 'string')
+            ->insert('package'      , 'string')
+            ->insert('distinct'     , 'string')
             ->insert('id'           , 'int', null, true);
     }
 

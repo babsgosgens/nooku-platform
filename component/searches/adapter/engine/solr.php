@@ -72,36 +72,64 @@ class AdapterEngineSolr extends Library\Object implements AdapterEngineInterface
         if($this->isConnected())
         {
             $query = $this->_client->createSelect();
-            $query->setQueryDefaultOperator('AND');
 
-            if($state->search)
+            if(is_string($state->distinct))
             {
-                $query->setQuery("*".str_ireplace(" ", "* *", $state->search)."*");
-            }
+                // get the facetset component
+                $facetSet = $query->getFacetSet();
 
-            if(is_string($state->identifier))
-            {
-                $query->createFilterQuery('identifier')
-                      ->setQuery('identifier:'.$state->identifier);
-            }
+                // create a facet field instance and set options
+                $facetSet->createFacetField($state->distinct)->setField($state->distinct);
 
-            if($state->sort)
-            {
-                $query->addSort($state->sort, $state->direction);
-            }
+            } else {
+                $query->setQueryDefaultOperator('AND');
+                if($state->search)
+                {
+                    $query->setQuery("*".str_ireplace(" ", "* *", $state->search)."*");
+                }
 
-            $query->setStart($state->offset);
-            $query->setRows($state->limit);
+                if(is_string($state->identifier))
+                {
+                    $query->createFilterQuery('identifier')
+                          ->setQuery('identifier:'.$state->identifier);
+                }
+                if(is_string($state->package))
+                {
+                    $query->createFilterQuery('package')
+                        ->setQuery('identifier_package:'.$state->package);
+                }
+
+                if($state->sort)
+                {
+                    $query->addSort($state->sort, $state->direction);
+                }
+
+                $query->setStart($state->offset);
+                $query->setRows($state->limit);
+            }
 
             $results = $this->_client->select($query);
-            $rowset['total'] = $results->getNumFound();
 
-            foreach($results->getDocuments() as $doc)
+            if(is_string($state->distinct))
             {
-                $rowset['items'][] = $doc->getFields();
+                $rowset['total'] = $results->getNumFound();
+
+                $facets = $results->getFacetSet()->getFacet($state->distinct);
+                $i=1;
+                foreach($facets as $key=>$count)
+                {
+                    $rowset['items'][] = array('id'=>$i++, 'field'=> $key, 'count'=>$count);
+                }
+
+            } else {
+                $rowset['total'] = $results->getNumFound();
+
+                foreach($results->getDocuments() as $doc)
+                {
+                    $rowset['items'][] = $doc->getFields();
+                }
             }
         }
-
         return $rowset;
     }
 
