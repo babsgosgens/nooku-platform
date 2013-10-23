@@ -49,15 +49,16 @@ class ModelResults extends Library\ModelAbstract
         /**
          * Getting the Search Engine params
          */
-        $parameters = $this->getObject('application.extensions')->solr->params;
+        $application = $this->getObject('application');
+
         //Setup the component locator
         $this->_client = new Solarium\Client(array(
             'endpoint' => array(
                 'localhost' => array(
-                    'host' => $parameters->get('url'),
-                    'port' => $parameters->get('port'),
-                    'path' => '/'.$parameters->get('instance').'/',
-                    'core' => $parameters->get('core'),
+                    'host' => $application->getCfg('solr_host'),
+                    'port' => $application->getCfg('solr_port'),
+                    'path' => '/'.$application->getCfg('solr_path').'/',
+                    'core' => $application->getCfg('solr_core'),
                 )
             )
         ));

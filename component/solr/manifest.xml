@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest type="component" version="1.0">
-    <name>Searches</name>
+    <name>Solr</name>
     <version>13.1</version>
     <date>July 2013</date>
     <author>
@@ -10,5 +10,5 @@
     </author>
     <copyright>Copyright (C) 2011 - 2013 Timble CVBA and Contributors. (http://www.timble.net)</copyright>
     <license>http://www.gnu.org/licenses/gpl.html GNU/GPL v3</license>
-    <description>A Search component. That gets it's results from an enteprise search platform</description>
+    <description>A SOLR Search component. That gets it's results from an enteprise search platform</description>
 </manifest>
