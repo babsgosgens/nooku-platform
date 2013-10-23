@@ -27,7 +27,7 @@ class ArticlesControllerArticle extends Library\ControllerModel
     		    'com:languages.controller.behavior.translatable',
                 'com:attachments.controller.behavior.attachable',
                 'com:tags.controller.behavior.taggable',
-                'com:searches.controller.behavior.searchable'
+                'com:solr.controller.behavior.searchable'
     	    )
     	));
     

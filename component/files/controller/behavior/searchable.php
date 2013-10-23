@@ -11,14 +11,14 @@ namespace Nooku\Component\Files;
 
 use Nooku\Library;
 
-use Nooku\Component\Searches;
+use Nooku\Component\Solr;
 /**
  * Searchable Database Behavior
  *
  * @author  Terry Visser <http://nooku.assembla.com/profile/terryvisser>
  * @package Nooku\Component\Revisions
  */
-class ControllerBehaviorSearchable extends Searches\ControllerBehaviorSearchable
+class ControllerBehaviorSearchable extends Solr\ControllerBehaviorSearchable
 {
     protected  function addToSearchEngine(Library\CommandContext $context){
 
