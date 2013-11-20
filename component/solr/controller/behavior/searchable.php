@@ -23,24 +23,23 @@ use Solarium;
  */
 class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
 {
-    protected  $_solarium;
+    protected  $_client;
 
     protected function _initialize(ObjectConfig $config)
     {
-        $parameters = $this->getObject('application.extensions')->searches->params;
 
-        $solr = array(
+        $application = $this->getObject('application');
+        $this->_client = new Solarium\Client(array(
             'endpoint' => array(
                 'localhost' => array(
-                    'host' => $parameters->get('url'),
-                    'port' => $parameters->get('port'),
-                    'path' => '/'.$parameters->get('instance').'/',
-                    'core' => $parameters->get('core'),
+                    'host' => $application->getCfg('solr_host'),
+                    'port' => $application->getCfg('solr_port'),
+                    'path' => '/'.$application->getCfg('solr_path').'/',
+                    'core' => $application->getCfg('solr_core'),
                 )
             )
-        );
+        ));
 
-        $this->_solarium = new Solarium\Client($solr);
 
         parent::_initialize($config);
     }
@@ -74,7 +73,7 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
     protected function _afterControllerDelete(Library\CommandContext $context)
     {
         // get an update query instance
-        $update = $this->_solarium->createUpdate();
+        $update = $this->_client->createUpdate();
 
         // add the delete id and a commit command to the update query
         $update->addDeleteById($context->table."_".$this->id);
@@ -86,7 +85,7 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
     protected  function addToSearchEngine(Library\CommandContext $context)
     {
         $schema = json_decode(file_get_contents($this->_solarium->getEndpoint()->getBaseUri().'admin/luke?show=schema&wt=json'));
-        $update = $this->_solarium->createUpdate();
+        $update = $this->_client->createUpdate();
         $doc    = $update->createDocument();
 
         $id = $context->result->get('id');
@@ -139,6 +138,6 @@ class ControllerBehaviorSearchable extends Library\ControllerBehaviorAbstract
         $update->addDocuments(array($doc));
         $update->addCommit();
 
-        $this->_solarium->update($update);
+        $this->_client->update($update);
     }
 }

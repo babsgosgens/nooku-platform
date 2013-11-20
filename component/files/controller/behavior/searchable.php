@@ -23,7 +23,7 @@ class ControllerBehaviorSearchable extends Solr\ControllerBehaviorSearchable
     protected  function addToSearchEngine(Library\CommandContext $context){
 
 
-        $query = $this->_solarium->createExtract();
+        $query = $this->_client->createExtract();
         $doc = $query->createDocument();
 
 
@@ -45,7 +45,7 @@ class ControllerBehaviorSearchable extends Solr\ControllerBehaviorSearchable
         $doc->container_s = $file->container;
 
 
-        $query = $this->_solarium->createExtract();
+        $query = $this->_client->createExtract();
         $query->addFieldMapping('content', 'fulltext');
         $query->setUprefix('attr_');
         $query->setFile($file->fullpath);
@@ -55,7 +55,7 @@ class ControllerBehaviorSearchable extends Solr\ControllerBehaviorSearchable
         $query->setDocument($doc);
 
         //Save the Document to Solr
-        $this->_solarium->extract($query);
+        $this->_client->extract($query);
 
 
     }
